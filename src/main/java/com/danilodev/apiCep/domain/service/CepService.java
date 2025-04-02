@@ -1,5 +1,6 @@
 package com.danilodev.apiCep.domain.service;
 
+import com.danilodev.apiCep.domain.dto.CepResponseDTO;
 import com.danilodev.apiCep.domain.model.CepLog;
 import com.danilodev.apiCep.domain.repository.CepLogRepository;
 import org.springframework.stereotype.Service;
@@ -20,20 +21,18 @@ public class CepService {
         this.cepLogRepository = cepLogRepository;
     }
 
-    public String buscarCep(String cep){
-        if (!isValidCep(cep)){
+    public CepResponseDTO buscarCep(String cep) {
+        if (!isValidCep(cep)) {
             throw new IllegalArgumentException("CEP Inválido");
         }
 
         String response = resTemplate.getForObject(MOCK_API_URL + cep, String.class);
+        LocalDateTime timestamp = LocalDateTime.now();
 
-        CepLog log = new CepLog();
-        log.setCep(cep);
-        log.setResponseData(response);
-        log.setTimestamp(LocalDateTime.now());
+        CepLog log = new CepLog(null, cep, response, timestamp);
         cepLogRepository.save(log);
 
-        return response;
+        return new CepResponseDTO(cep, response, timestamp);
     }
 
     private boolean isValidCep(String cep){
