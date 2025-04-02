@@ -38,7 +38,7 @@ class CepServiceTest {
 
     @Test
     void buscarCep_DeveRetornarRespostaValidaELogarNoBanco() {
-        // Simula a validação do CEP como válida
+
         doNothing().when(cepValidator).validate(MOCK_CEP);
 
         CepResponseDTO response = cepService.buscarCep(MOCK_CEP);
@@ -46,7 +46,7 @@ class CepServiceTest {
         assertEquals(MOCK_CEP, response.cep());
         assertNotNull(response.timestamp());
 
-        // Verifica que o log foi salvo corretamente
+
         verify(cepLogStorage, times(1)).salvar(any(CepLog.class));
     }
 
@@ -59,7 +59,7 @@ class CepServiceTest {
 
         assertEquals("CEP Inválido", exception.getMessage());
 
-        // Confirma que NENHUM log foi salvo no banco
+
         verify(cepLogStorage, never()).salvar(any(CepLog.class));
     }
 }
