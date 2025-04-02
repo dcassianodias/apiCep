@@ -1,5 +1,6 @@
 package com.danilodev.apiCep.controller;
 
+import com.danilodev.apiCep.domain.dto.CepResponseDTO;
 import com.danilodev.apiCep.domain.service.CepService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,7 +18,7 @@ public class CepController {
     }
 
     @GetMapping("/{cep}")
-    public String buscarCep(@PathVariable String cep){
+    public CepResponseDTO buscarCep(@PathVariable String cep){
         return service.buscarCep(cep);
     }
 }
