@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: api
+  datasource:
+    url: jdbc:mysql://localhost/apiCep
+    username: root
+    password: 2012
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+
+server:
+  error:
+    include-stacktrace: never
