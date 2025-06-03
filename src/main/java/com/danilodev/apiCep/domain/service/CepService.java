@@ -3,14 +3,12 @@ package com.danilodev.apiCep.domain.service;
 import com.danilodev.apiCep.domain.dto.CepResponseDTO;
 import com.danilodev.apiCep.domain.model.CepLog;
 import com.danilodev.apiCep.domain.model.CepLogStorage;
-import com.danilodev.apiCep.domain.repository.CepLogRepository;
 import com.danilodev.apiCep.domain.validators.CepValidator;
 import com.danilodev.apiCep.integration.CepLookup;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDateTime;
-import java.util.regex.Pattern;
 
 @Service
 public class CepService {
@@ -25,6 +23,7 @@ public class CepService {
         this.cepLogStorage = cepLogStorage;
     }
 
+    @Cacheable(value = "cep_search", key = "#cep")
     public CepResponseDTO buscarCep(String cep) {
         cepValidator.validate(cep);
         String response = cepClient.buscarCep(cep);

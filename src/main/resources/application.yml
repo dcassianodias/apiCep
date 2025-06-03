@@ -10,7 +10,13 @@ spring:
     properties:
       hibernate:
         format_sql: true
+  redis:
+    host: ${HOST:localhost}
+    port: ${PORT:6379}
+  cache:
+    type: redis
+    cache-names: cep_search
 
 server:
   error:
-    include-stacktrace: never
+    include-stacktrace: always
